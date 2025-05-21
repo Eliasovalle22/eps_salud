@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Iniciar sesión</h2>
+  
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+  </form>
+
+  <hr>
+  <p>¿Eres nuevo?</p>
+  <a href="{% url 'medico_registro' %}" class="btn btn-outline-secondary">Registro Médico</a>
+  <a href="{% url 'paciente_registro' %}" class="btn btn-outline-secondary">Registro Paciente</a>
+</div>
+{% endblock %}

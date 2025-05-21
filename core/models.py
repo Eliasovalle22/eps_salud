@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.hashers import make_password
 # Create your models here.
 
 
@@ -36,6 +36,12 @@ class Medico(models.Model):
     def __str__(self):
         return self.nombre
     
+    def save(self, *args, **kwargs):
+        # Solo hashea si no está hasheada ya
+        if not self.password.startswith('pbkdf2_'):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+    
 
 class Paciente(models.Model):
     identificacion = models.CharField(max_length=20, unique=True)
@@ -56,6 +62,11 @@ class Paciente(models.Model):
         
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        if not self.password.startswith('pbkdf2_'):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
     
     
 class Cita(models.Model):
