@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Medico, Paciente
-from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm
+from .models import Medico, Paciente, Cita
+from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm, CitaForm
+from django.http import HttpResponse
+from datetime import date
 
 # Create your views here.
 
@@ -84,3 +86,73 @@ def paciente_home(request):
         return redirect('login')
     return render(request, 'core/paciente_home.html')
 
+
+# -------------------VISTA AGENDAR CITA-------------------------
+def agendar_cita(request):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+
+    paciente_id = request.session.get('user_id')
+    paciente = Paciente.objects.get(id=paciente_id)
+
+    if request.method == 'POST':
+        form = CitaForm(request.POST)
+        if form.is_valid():
+            cita = form.save(commit=False)
+            medico = cita.medico
+            fecha = cita.fecha
+
+            # Validar disponibilidad
+            citas_en_dia = Cita.objects.filter(
+                medico=medico, fecha=fecha).count()
+            if citas_en_dia >= 10:
+                messages.error(
+                    request, 'El médico ya tiene 10 citas para ese día.')
+            else:
+                cita.paciente = paciente
+                cita.unidad = medico.unidad
+                cita.estado = 'P'
+                cita.save()
+                messages.success(request, 'Cita agendada correctamente.')
+                return redirect('paciente_home')
+    else:
+        form = CitaForm()
+
+    return render(request, 'core/agendar_cita.html', {'form': form})
+def ver_citas(request):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+
+    paciente_id = request.session.get('user_id')
+    paciente = Paciente.objects.get(id=paciente_id)
+    citas = Cita.objects.filter(paciente=paciente)
+
+    return render(request, 'core/ver_citas.html', {'citas': citas})
+
+
+
+# -------------------VISTA CITAS PACIENTE-------------------------
+def citas_paciente(request):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+
+    paciente_id = request.session.get('user_id')
+    citas = Cita.objects.filter(
+        paciente__id=paciente_id).order_by('-fecha', '-hora')
+
+    return render(request, 'core/citas_paciente.html', {'citas': citas})
+
+# -------------------VISTA CITAS MEDICO-------------------------
+def citas_medico(request):
+    if request.session.get('user_type') != 'medico':
+        return redirect('login')
+
+    medico_id = request.session.get('user_id')
+    hoy = date.today()
+
+    citas = Cita.objects.filter(
+        medico__id=medico_id,
+        fecha=hoy
+    ).order_by('hora')
+
+    return render(request, 'core/citas_medico.html', {'citas': citas, 'hoy': hoy})

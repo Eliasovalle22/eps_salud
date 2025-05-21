@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Mis Citas Agendadas</h2>
+    {% if citas %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Médico</th>
+                    <th>Especialidad</th>
+                    <th>Unidad</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr>
+                    <td>{{ cita.fecha }}</td>
+                    <td>{{ cita.hora }}</td>
+                    <td>{{ cita.medico.nombre }}</td>
+                    <td>{{ cita.medico.especialidad }}</td>
+                    <td>{{ cita.unidad.nombre }}</td>
+                    <td>{{ cita.motivo }}</td>
+                    <td>{{ cita.get_estado_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tienes citas agendadas.</p>
+    {% endif %}
+    <a href="{% url 'paciente_home' %}" class="btn btn-primary mt-3">Volver</a>
+</div>
+{% endblock %}
