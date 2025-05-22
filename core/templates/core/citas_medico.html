@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>Citas para hoy ({{ hoy }})</h2>
+    <h2>
+        <small class="text-muted">
+            Médico: {{ medico.nombre }}<br>
+            Unidad: {{ medico.unidad.nombre }}<br>
+        </small>
+        Citas para hoy{% if hoy %} ({{ hoy }}){% endif %}<br>
 
+    </h2>
     {% if citas %}
         <table class="table table-hover table-striped">
             <thead>
@@ -23,6 +29,8 @@
                     <td>{{ cita.get_estado_display }}</td>
                     <td>
                         <a href="{% url 'ver_consulta' cita.id %}" class="btn btn-sm btn-outline-primary {% if not cita.consulta %}{% endif %}">Ver consulta</a>
+                        <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'eliminar_cita' cita.id %}" class="btn btn-sm btn-danger">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}

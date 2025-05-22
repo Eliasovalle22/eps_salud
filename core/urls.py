@@ -14,4 +14,8 @@ urlpatterns = [
     path('medico/citas/', views.citas_medico, name='citas_medico'),
     path('consulta/<int:cita_id>/', views.ver_consulta, name='ver_consulta'),
     path('paciente/cita/<int:cita_id>/',views.detalle_cita_paciente, name='detalle_cita_paciente'),
+    path('medico/cita/editar/<int:cita_id>/',views.editar_cita, name='editar_cita'),
+    path('medico/cita/eliminar/<int:cita_id>/',views.eliminar_cita, name='eliminar_cita'),
+    path('paciente/cita/cancelar/<int:cita_id>/',views.cancelar_cita, name='cancelar_cita'),
+    path('paciente/cita/reprogramar/<int:cita_id>/',views.reprogramar_cita, name='reprogramar_cita'),
 ]

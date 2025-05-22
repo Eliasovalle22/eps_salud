@@ -2,6 +2,11 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Mis Citas Agendadas</h2>
+    <samall class="text-muted">
+        <p>Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
+        Paciente: {{ paciente.nombre }}<br>
+        Unidad: {{ paciente.unidad.nombre }}<br>
+    </small>
     <a href="{% url 'agendar_cita' %}" class="btn btn-success mb-3">Agendar Nueva Cita</a>
     {% if citas %}
         <table class="table table-bordered table-striped">
@@ -29,9 +34,11 @@
                     <td>{{ cita.get_estado_display }}</td>
                     <td>
                         <a href="{% url 'detalle_cita_paciente' cita.id %}" class="btn btn-sm btn-outline-primary {% if not cita.consulta %}disabled{% endif %}">Ver Consulta</a>
-                        {% if cita.estado == 'Agendada' %}
-                            <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger">Cancelar</a>
-                        {% endif %}
+                        <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger">Cancelar</a>
+                        <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-info">Reprogramar</a>
+                        {% comment %} {% if cita.estado == 'Agendada' %}
+                        <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger">Cancelar</a>
+                        {% endif %} {% endcomment %}
                     </td>
                 </tr>
                 {% endfor %}

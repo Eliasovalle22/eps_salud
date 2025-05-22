@@ -74,17 +74,32 @@ def logout_view(request):
 # -------------------VISTA MEDICO HOME-------------------------
 
 
-def citas_medico(request):
-    if request.session.get('user_type') != 'medico':
-        return redirect('login')
-    return render(request, 'core/citas_medico.html')
+# def citas_medico(request):
+#     if request.session.get('user_type') != 'medico':
+#         return redirect('login')
+
+#     medico_id = request.session.get('user_id')
+#     medico = Medico.objects.get(id=medico_id)
+#     citas = Cita.objects.filter(
+#         medico__id=medico_id
+#     ).order_by('-fecha', 'hora')
+
+#     return render(request, 'core/citas_medico.html', {
+#         'citas': citas,
+#         'medico': medico,
+#     })
 
 
 # -------------------VISTA PACIENTE HOME-------------------------
-def citas_paciente(request):
-    if request.session.get('user_type') != 'paciente':
-        return redirect('login')
-    return render(request, 'core/citas_paciente.html')
+# def citas_paciente(request):
+#     if request.session.get('user_type') != 'paciente':
+#         return redirect('login')
+
+#     paciente_id = request.session.get('user_id')
+#     paciente = Paciente.objects.get(id=paciente_id)
+#     citas = Cita.objects.filter(paciente=paciente)
+
+#     return render(request, 'core/citas_paciente.html', {'citas': citas})
 
 
 # -------------------VISTA AGENDAR CITA-------------------------
@@ -175,10 +190,14 @@ def citas_paciente(request):
         return redirect('login')
 
     paciente_id = request.session.get('user_id')
+    paciente = Paciente.objects.get(id=paciente_id)
     citas = Cita.objects.filter(
         paciente__id=paciente_id).order_by('-fecha', '-hora')
 
-    return render(request, 'core/citas_paciente.html', {'citas': citas})
+    return render(request, 'core/citas_paciente.html', {
+        'citas': citas,
+        'paciente': paciente,
+    })
 
 
 # -------------------VISTA CITAS MEDICO-------------------------
@@ -187,12 +206,15 @@ def citas_medico(request):
         return redirect('login')
 
     medico_id = request.session.get('user_id')
-    # Quita el filtro de fecha para ver todas las citas
+    medico = Medico.objects.get(id=medico_id)
     citas = Cita.objects.filter(
         medico__id=medico_id
     ).order_by('-fecha', 'hora')
 
-    return render(request, 'core/citas_medico.html', {'citas': citas})
+    return render(request, 'core/citas_medico.html', {
+        'citas': citas,
+        'medico': medico,
+    })
 
 
 #--------------------DETALLE CITA PACIENTE-------------------------
@@ -204,3 +226,60 @@ def detalle_cita_paciente(request, cita_id):
     consulta = getattr(cita, 'consulta', None)
 
     return render(request, 'core/detalle_cita_paciente.html', {'cita': cita, 'consulta': consulta})
+
+#--------------------EDITAR CITA-------------------------
+def editar_cita(request, cita_id):
+    if request.session.get('user_type') != 'medico':
+        return redirect('login')
+    cita = get_object_or_404(
+        Cita, id=cita_id, medico_id=request.session.get('user_id'))
+    if request.method == 'POST':
+        form = CitaForm(request.POST, instance=cita)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cita modificada correctamente.')
+            return redirect('citas_medico')
+    else:
+        form = CitaForm(instance=cita)
+    return render(request, 'core/editar_cita.html', {'form': form, 'cita': cita})
+
+#--------------------ELIMINAR CITA-------------------------
+def eliminar_cita(request, cita_id):
+    if request.session.get('user_type') != 'medico':
+        return redirect('login')
+    cita = get_object_or_404(
+        Cita, id=cita_id, medico_id=request.session.get('user_id'))
+    if request.method == 'POST':
+        cita.delete()
+        messages.success(request, 'Cita eliminada correctamente.')
+        return redirect('citas_medico')
+    return render(request, 'core/eliminar_cita.html', {'cita': cita})
+
+#--------------------CANCELAR CITA-------------------------
+def cancelar_cita(request, cita_id):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+    cita = get_object_or_404(
+        Cita, id=cita_id, paciente_id=request.session.get('user_id'))
+    if request.method == 'POST':
+        cita.estado = 'A'  # Anulada
+        cita.save()
+        messages.success(request, 'Cita cancelada correctamente.')
+        return redirect('citas_paciente')
+    return render(request, 'core/cancelar_cita.html', {'cita': cita})
+
+#--------------------REPROGRAMAR CITA-------------------------
+def reprogramar_cita(request, cita_id):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+    cita = get_object_or_404(
+        Cita, id=cita_id, paciente_id=request.session.get('user_id'), estado='P')
+    if request.method == 'POST':
+        form = CitaForm(request.POST, instance=cita)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cita reprogramada correctamente.')
+            return redirect('citas_paciente')
+    else:
+        form = CitaForm(instance=cita)
+    return render(request, 'core/reprogramar_cita.html', {'form': form, 'cita': cita})
