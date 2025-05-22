@@ -90,7 +90,7 @@ class Cita(models.Model):
     
 
 class Consulta(models.Model):
-    cita = models.OneToOneField(Cita, on_delete=models.CASCADE)
+    cita = models.OneToOneField('Cita', on_delete=models.CASCADE, related_name='consulta')
     sintoma = models.TextField()
     tratamiento = models.TextField()
     fecha_atencion = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Medico, Paciente, Cita
+from .models import Medico, Paciente, Cita,Consulta
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -35,4 +35,14 @@ class CitaForm(forms.ModelForm):
             'hora': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
             'motivo': forms.Textarea(attrs={'class': 'form-control'}),
             'medico': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+class ConsultaForm(forms.ModelForm):
+    class Meta:
+        model = Consulta
+        fields = ['sintoma', 'tratamiento']
+        widgets = {
+            'sintoma': forms.Textarea(attrs={'class': 'form-control'}),
+            'tratamiento': forms.Textarea(attrs={'class': 'form-control'}),
         }

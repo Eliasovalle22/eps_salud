@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Consulta de {{ cita.paciente.nombre }}</h2>
+    {% if consulta %}
+        <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
+        <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
+        <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="estado" class="form-label"><strong>Estado de la cita:</strong></label>
+                <select name="estado" id="estado" class="form-select">
+                    <option value="P" {% if cita.estado == "P" %}selected{% endif %}>Pendiente</option>
+                    <option value="C" {% if cita.estado == "C" %}selected{% endif %}>Confirmada</option>
+                    <option value="A" {% if cita.estado == "A" %}selected{% endif %}>Anulada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar Estado</button>
+        </form>
+    {% else %}
+        <div class="alert alert-warning">No hay consulta registrada para esta cita.</div>
+    {% endif %}
+    <a href="{% url 'citas_medico' %}" class="btn btn-secondary mt-3">Volver</a>
+</div>
+{% endblock %}

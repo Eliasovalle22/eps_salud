@@ -22,7 +22,7 @@
                     <td>{{ cita.motivo }}</td>
                     <td>{{ cita.get_estado_display }}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-outline-primary disabled">Ver consulta</a>
+                        <a href="{% url 'ver_consulta' cita.id %}" class="btn btn-sm btn-outline-primary {% if not cita.consulta %}{% endif %}">Ver consulta</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -32,6 +32,6 @@
         <p>No tiene citas para hoy.</p>
     {% endif %}
 
-    <a href="{% url 'medico_home' %}" class="btn btn-secondary mt-3">Volver</a>
+    <a href="{% url 'citas_medico' %}" class="btn btn-secondary mt-3">Volver</a>
 </div>
 {% endblock %}

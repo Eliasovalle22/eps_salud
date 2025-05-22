@@ -3,5 +3,8 @@
 <div class="container mt-5">
   <h2>Bienvenido Paciente</h2>
   <a href="{% url 'logout' %}">Cerrar sesión</a>
+  <hr>
+  <a href="{% url 'agendar_cita' %}" class="btn btn-success">Agendar Cita</a>
+  <a href="{% url 'citas_paciente' %}" class="btn btn-primary">Ver Mis Citas</a>
 </div>
 {% endblock %}

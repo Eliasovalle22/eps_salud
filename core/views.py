@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Medico, Paciente, Cita
-from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm, CitaForm
+from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm, CitaForm, ConsultaForm
 from django.http import HttpResponse
 from datetime import date
 
@@ -21,13 +21,13 @@ def login_view(request):
             if medico and check_password(password, medico.password):
                 request.session['user_id'] = medico.id
                 request.session['user_type'] = 'medico'
-                return redirect('medico_home')
+                return redirect('citas_medico')
 
             paciente = Paciente.objects.filter(username=username).first()
             if paciente and check_password(password, paciente.password):
                 request.session['user_id'] = paciente.id
                 request.session['user_type'] = 'paciente'
-                return redirect('paciente_home')
+                return redirect('citas_paciente')
 
             messages.error(request, 'Credenciales incorrectas')
 
@@ -74,17 +74,17 @@ def logout_view(request):
 # -------------------VISTA MEDICO HOME-------------------------
 
 
-def medico_home(request):
+def citas_medico(request):
     if request.session.get('user_type') != 'medico':
         return redirect('login')
-    return render(request, 'core/medico_home.html')
+    return render(request, 'core/citas_medico.html')
 
 
 # -------------------VISTA PACIENTE HOME-------------------------
-def paciente_home(request):
+def citas_paciente(request):
     if request.session.get('user_type') != 'paciente':
         return redirect('login')
-    return render(request, 'core/paciente_home.html')
+    return render(request, 'core/citas_paciente.html')
 
 
 # -------------------VISTA AGENDAR CITA-------------------------
@@ -114,20 +114,58 @@ def agendar_cita(request):
                 cita.estado = 'P'
                 cita.save()
                 messages.success(request, 'Cita agendada correctamente.')
-                return redirect('paciente_home')
+                return redirect('citas_paciente')
     else:
         form = CitaForm()
 
     return render(request, 'core/agendar_cita.html', {'form': form})
-def ver_citas(request):
-    if request.session.get('user_type') != 'paciente':
+
+# -------------------VISTA VER CITAS-------------------------
+# def ver_citas(request):
+#     if request.session.get('user_type') != 'paciente':
+#         return redirect('login')
+
+#     paciente_id = request.session.get('user_id')
+#     paciente = Paciente.objects.get(id=paciente_id)
+#     citas = Cita.objects.filter(paciente=paciente)
+
+#     return render(request, 'core/ver_citas.html', {'citas': citas})
+
+
+# -------------------VISTA VER CONSULTAS-------------------------
+def ver_consulta(request, cita_id):
+    if request.session.get('user_type') != 'medico':
         return redirect('login')
+    cita = get_object_or_404(Cita, id=cita_id)
+    consulta = getattr(cita, 'consulta', None)
 
-    paciente_id = request.session.get('user_id')
-    paciente = Paciente.objects.get(id=paciente_id)
-    citas = Cita.objects.filter(paciente=paciente)
-
-    return render(request, 'core/ver_citas.html', {'citas': citas})
+    if consulta:
+        # Solo permite cambiar el estado si ya existe consulta
+        if request.method == 'POST':
+            nuevo_estado = request.POST.get('estado')
+            if nuevo_estado in dict(Cita._meta.get_field('estado').choices):
+                cita.estado = nuevo_estado
+                cita.save()
+                messages.success(
+                    request, 'Estado de la cita actualizado correctamente.')
+                return redirect('ver_consulta', cita_id=cita.id)
+        return render(request, 'core/ver_consulta.html', {'cita': cita, 'consulta': consulta})
+    else:
+        # Permite crear la consulta
+        if request.method == 'POST':
+            form = ConsultaForm(request.POST)
+            if form.is_valid():
+                nueva_consulta = form.save(commit=False)
+                nueva_consulta.cita = cita
+                nueva_consulta.unidad = cita.unidad
+                nueva_consulta.save()
+                cita.estado = 'C'  # Cambia el estado a Confirmada al crear consulta
+                cita.save()
+                messages.success(request, 'Consulta registrada correctamente.')
+                return redirect('ver_consulta', cita_id=cita.id)
+        else:
+            form = ConsultaForm()
+        return render(request, 'core/crear_consulta.html', {'cita': cita, 'form': form})
 
 
 
@@ -142,17 +180,27 @@ def citas_paciente(request):
 
     return render(request, 'core/citas_paciente.html', {'citas': citas})
 
+
 # -------------------VISTA CITAS MEDICO-------------------------
 def citas_medico(request):
     if request.session.get('user_type') != 'medico':
         return redirect('login')
 
     medico_id = request.session.get('user_id')
-    hoy = date.today()
-
+    # Quita el filtro de fecha para ver todas las citas
     citas = Cita.objects.filter(
-        medico__id=medico_id,
-        fecha=hoy
-    ).order_by('hora')
+        medico__id=medico_id
+    ).order_by('-fecha', 'hora')
 
-    return render(request, 'core/citas_medico.html', {'citas': citas, 'hoy': hoy})
+    return render(request, 'core/citas_medico.html', {'citas': citas})
+
+
+#--------------------DETALLE CITA PACIENTE-------------------------
+def detalle_cita_paciente(request, cita_id):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+
+    cita = get_object_or_404(Cita, id=cita_id, paciente__id=request.session.get('user_id'))
+    consulta = getattr(cita, 'consulta', None)
+
+    return render(request, 'core/detalle_cita_paciente.html', {'cita': cita, 'consulta': consulta})
