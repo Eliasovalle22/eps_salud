@@ -5,13 +5,13 @@
         <div class="mb-4 text-center">
             <i class="bi bi-calendar-heart" style="font-size: 2.5rem; color: #0d6efd;"></i>
             <h2 class="mt-2 mb-0 fw-bold text-primary">Mis Citas Agendadas</h2>
-
             <small class="text-light" style="font-size: 1.35rem;">
                 <p class="mb-1">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
                 <span style="font-size: 1.45rem;">
                     Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }}</strong><br>
                     Unidad: <strong style="font-size: 1.65rem;">{{ paciente.unidad.nombre }}</strong>
                 </span>
+
 
 
             <small class="text-light" style="font-size: 1.35rem;">
@@ -58,8 +58,6 @@
                             <td>{{ cita.motivo }}</td>
                             <td>
 
-
-
                                 <span class="badge 
                                     {% if cita.estado == 'pendiente' or cita.estado == 'P' %}bg-warning text-dark
                                     {% elif cita.estado == 'realizada' or cita.estado == 'C' %}bg-success
@@ -68,7 +66,9 @@
 
 
 
+
                                 <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+
 
 
                                     {{ cita.get_estado_display }}
