@@ -1,11 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-5">
-  <h2>Registro de Paciente</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success" type="submit">Registrarse</button>
-  </form>
+<style>
+  body {
+    background: linear-gradient(135deg, #90E0EF 0%, #03045E 100%);
+    min-height: 100vh;
+  }
+  .registro-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  input, select, textarea {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: background 0.3s, border 0.3s !important;
+  }
+  input:focus, select:focus, textarea:focus {
+    background: rgba(30, 110, 221, 0.25) !important;
+    border: 1.5px solid #0d6efd !important;
+    color: #fff !important;
+  }
+  label {
+    color: #e0e0e0;
+  }
+  .btn-outline-secondary,
+  .btn-outline-secondary:visited {
+    color: #fff !important;
+    border-color: #fff !important;
+  }
+  .btn-outline-secondary:hover {
+    background: #fff;
+    color: #0d6efd !important;
+    border-color: #fff !important;
+  }
+</style>
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card registro-card shadow p-4" style="width: 100%; max-width: 400px;">
+    <div class="text-center mb-4">
+      <i class="bi bi-person-plus" style="font-size: 3rem; color: #0d6efd;"></i>
+      <h2 class="mt-2">Registro Paciente</h2>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary w-100 mt-2" type="submit">Registrarse</button>
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary w-100 mt-2">Volver al Login</a>
+    </form>
+  </div>
 </div>
 {% endblock %}
