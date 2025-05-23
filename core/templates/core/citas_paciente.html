@@ -11,6 +11,22 @@
                     Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }}</strong><br>
                     Unidad: <strong style="font-size: 1.65rem;">{{ paciente.unidad.nombre }}</strong>
                 </span>
+
+
+
+            <small class="text-light" style="font-size: 1.35rem;">
+                <p class="mb-1">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
+                <span style="font-size: 1.45rem;">
+                    Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }}</strong><br>
+                    Unidad: <strong style="font-size: 1.65rem;">{{ paciente.unidad.nombre }}</strong>
+                </span>
+
+            <small class="text-light">
+                <p class="mb-1">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
+                Paciente: <strong>{{ paciente.nombre }}</strong><br>
+                Unidad: <strong>{{ paciente.unidad.nombre }}</strong>
+
+
             </small>
         </div>
         <div class="text-end mb-3">
@@ -41,11 +57,20 @@
                             <td>{{ cita.unidad.nombre }}</td>
                             <td>{{ cita.motivo }}</td>
                             <td>
+
                                 <span class="badge 
                                     {% if cita.estado == 'pendiente' or cita.estado == 'P' %}bg-warning text-dark
                                     {% elif cita.estado == 'realizada' or cita.estado == 'C' %}bg-success
                                     {% elif cita.estado == 'A' %}bg-danger
                                     {% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+
+
+
+
+                                <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+
+
+
                                     {{ cita.get_estado_display }}
                                 </span>
                             </td>
