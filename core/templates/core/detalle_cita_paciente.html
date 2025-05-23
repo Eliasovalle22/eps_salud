@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Detalle de la Consulta</h2>
-    <p><strong>Médico:</strong> {{ cita.medico.nombre }}</p>
-    <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
-    <p><strong>Hora:</strong> {{ cita.hora }}</p>
-    <p><strong>Motivo:</strong> {{ cita.motivo }}</p>
-    <p><strong>Estado:</strong> {{ cita.get_estado_display }}</p>
-    <hr>
-    {% if consulta %}
-        <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
-        <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
-        <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
-    {% else %}
-        <div class="alert alert-warning">Aún no hay consulta registrada para esta cita.</div>
-    {% endif %}
-    <a href="{% url 'citas_paciente' %}" class="btn btn-secondary mt-3">Volver</a>
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+        <h2 class="mb-4 text-center text-primary">Detalle de la Consulta</h2>
+        <p><strong>Médico:</strong> {{ cita.medico.nombre }}</p>
+        <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+        <p><strong>Hora:</strong> {{ cita.hora }}</p>
+        <p><strong>Motivo:</strong> {{ cita.motivo }}</p>
+        <p><strong>Estado:</strong> 
+            <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+                {{ cita.get_estado_display }}
+            </span>
+        </p>
+        <hr>
+        {% if consulta %}
+            <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
+            <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
+            <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
+        {% else %}
+            <div class="alert alert-warning text-center">Aún no hay consulta registrada para esta cita.</div>
+        {% endif %}
+        <a href="{% url 'citas_paciente' %}" class="btn btn-outline-secondary w-100 mt-3">Volver</a>
+    </div>
 </div>
 {% endblock %}
