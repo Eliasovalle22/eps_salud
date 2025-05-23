@@ -1,45 +1,54 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h2>
-        <small class="text-muted">
-            Médico: {{ medico.nombre }}<br>
-            Unidad: {{ medico.unidad.nombre }}<br>
-        </small>
-        Citas para hoy{% if hoy %} ({{ hoy }}){% endif %}<br>
-
-    </h2>
-    {% if citas %}
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Hora</th>
-                    <th>Paciente</th>
-                    <th>Motivo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cita in citas %}
-                <tr>
-                    <td>{{ cita.hora }}</td>
-                    <td>{{ cita.paciente.nombre }}</td>
-                    <td>{{ cita.motivo }}</td>
-                    <td>{{ cita.get_estado_display }}</td>
-                    <td>
-                        <a href="{% url 'ver_consulta' cita.id %}" class="btn btn-sm btn-outline-primary {% if not cita.consulta %}{% endif %}">Ver consulta</a>
-                        <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="{% url 'eliminar_cita' cita.id %}" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No tiene citas para hoy.</p>
-    {% endif %}
-
-    <a href="{% url 'citas_medico' %}" class="btn btn-secondary mt-3">Volver</a>
+<div class="container mt-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4 w-100" style="max-width: 950px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+        <div class="mb-4 text-center">
+            <i class="bi bi-calendar2-heart" style="font-size: 3rem; color: #0d6efd;"></i>
+            <h2 class="mt-2 mb-0 fw-bold text-primary">Citas para hoy{% if hoy %} <span class="fs-5 text-primary">({{ hoy }})</span>{% endif %}</h2>
+            <small class="text-light">
+                Médico: <strong>{{ medico.nombre }}</strong> <br>
+                Unidad: <strong>{{ medico.unidad.nombre }}</strong>
+            </small>
+        </div>
+        {% if citas %}
+            <div class="table-responsive rounded-4 overflow-hidden">
+                <table class="table table-hover align-middle mb-0" style="background: rgba(255,255,255,0.85); border-radius: 16px;">
+                    <thead style="background: linear-gradient(90deg, #0d6efd 60%, #90e0ef 100%); color: #fff;">
+                        <tr>
+                            <th>Hora</th>
+                            <th>Paciente</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cita in citas %}
+                        <tr style="transition: background 0.2s;" onmouseover="this.style.background='#e7f1ff'" onmouseout="this.style.background=''">
+                            <td class="fw-semibold">{{ cita.hora }}</td>
+                            <td>{{ cita.paciente.nombre }}</td>
+                            <td>{{ cita.motivo }}</td>
+                            <td>
+                                <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+                                    {{ cita.get_estado_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{% url 'ver_consulta' cita.id %}" class="btn btn-sm btn-outline-primary mb-1 rounded-pill px-3">Ver consulta</a>
+                                <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-warning mb-1 rounded-pill px-3 text-white">Editar</a>
+                                <a href="{% url 'eliminar_cita' cita.id %}" class="btn btn-sm btn-danger mb-1 rounded-pill px-3">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center mb-0 mt-4">No tiene citas para hoy.</div>
+        {% endif %}
+        <div class="text-center mt-4">
+            <a href="{% url 'citas_medico' %}" class="btn btn-outline-secondary rounded-pill px-4">Volver</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
