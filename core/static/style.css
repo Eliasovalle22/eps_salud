@@ -13,10 +13,7 @@ body {
 }
 input, select, textarea,
 input[type="text"], input[type="password"], input[type="email"] {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
-  color: #fff !important;
-  border-radius: 8px !important;
+  border-radius: 50px !important;
   padding: 10px !important;
   margin-bottom: 10px !important;
   box-shadow: none !important;
@@ -55,33 +52,14 @@ label {
 .form-label {
   font-weight:bold;
 }
-#id_nombre {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 400px; 
-}
-#id_especialidad {
-display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 400px;
-}
-#id_jornada {
-display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 400px;
-}
-#id_username {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 400px;
-}
+#id_nombre,
+#id_especialidad,
+#id_jornada,
+#id_username,
 #id_unidad {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 400px;
+  /* Elimina estas líneas: */
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  /* width: 400px; */
 }
