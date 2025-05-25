@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+    <div class="card shadow-lg p-4"
+        style="width: 100%; max-width: 450px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
         <div class="text-center mb-4">
             <i class="bi bi-pencil-square" style="font-size: 2.5rem; color: #0d6efd;"></i>
             <h2 class="mt-2 mb-0 fw-bold text-primary">Editar Cita</h2>
@@ -9,13 +10,13 @@
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div class="mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors }}</div>
-                    {% endif %}
-                </div>
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
             {% endfor %}
             <button type="submit" class="btn btn-success w-100 mb-2">Guardar Cambios</button>
             <a href="{% url 'citas_medico' %}" class="btn btn-outline-secondary w-100">Cancelar</a>
