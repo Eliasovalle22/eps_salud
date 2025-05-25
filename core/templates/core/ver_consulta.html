@@ -1,27 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+    <div class="card shadow-lg p-4"
+        style="width: 100%; max-width: 500px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
         <h2 class="mb-4 text-center text-primary">Consulta de {{ cita.paciente.nombre }}</h2>
         {% if consulta %}
-            <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
-            <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
-            <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
-            <hr>
-            <form method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="estado" class="form-label"><strong>Estado de la cita:</strong></label>
-                    <select name="estado" id="estado" class="form-select">
-                        <option value="P" {% if cita.estado == "P" %}selected{% endif %}>Pendiente</option>
-                        <option value="C" {% if cita.estado == "C" %}selected{% endif %}>Confirmada</option>
-                        <option value="A" {% if cita.estado == "A" %}selected{% endif %}>Anulada</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 mb-2">Actualizar Estado</button>
-            </form>
+        <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
+        <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
+        <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="estado" class="form-label"><strong>Estado de la cita:</strong></label>
+                <select name="estado" id="estado" class="form-select">
+                    <option value="P" {% if cita.estado=="P" %}selected{% endif %}>Pendiente</option>
+                    <option value="C" {% if cita.estado=="C" %}selected{% endif %}>Confirmada</option>
+                    <option value="A" {% if cita.estado=="A" %}selected{% endif %}>Anulada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Actualizar Estado</button>
+        </form>
         {% else %}
-            <div class="alert alert-warning text-center">No hay consulta registrada para esta cita.</div>
+        <div class="alert alert-warning text-center">No hay consulta registrada para esta cita.</div>
         {% endif %}
         <a href="{% url 'citas_medico' %}" class="btn btn-outline-secondary w-100 mt-2">Volver</a>
     </div>
