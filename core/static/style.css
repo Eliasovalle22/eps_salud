@@ -42,24 +42,80 @@ label {
   border-color: #fff !important;
 }
 .text-center {
+
   display: flex;
+  display: flex;
+
   flex-direction: column; 
   gap: 20px; 
 }
 .mb-3 {
-  overflow: hidden; /**limite al cuadro**/
+  overflow: hidden;
 }
 .form-label {
   font-weight:bold;
+}
+
+#id_nombre {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 350px; 
+}
+#id_especialidad {
+  display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 350px;
+}
+#id_jornada {
+  display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 350px;
+}
+#id_username {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+#id_unidad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+#id_identificacion {
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+#id_edad{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+#id_tipo_afiliacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+
+.badge {
+   border: 1px solid #000;
+   padding: -5px;
+   margin: -20px;
+   
 }
 #id_nombre,
 #id_especialidad,
 #id_jornada,
 #id_username,
 #id_unidad {
-  /* Elimina estas líneas: */
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
-  /* width: 400px; */
+
 }
+
