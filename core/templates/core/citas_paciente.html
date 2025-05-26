@@ -2,18 +2,7 @@
 {% block content %}
 <div class="container mt-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
 
-    <div class="card shadow-lg p-4 w-100" style="max-width: 1000px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
-        <div class="mb-4 text-center">
-            <i class="bi bi-calendar-heart" style="font-size: 2.5rem; color: #0d6efd;"></i>
-            <h2 class="mt-2 mb-0 fw-bold text-primary">Mis Citas Agendadas</h2>
-            <small class="text-light">
-                <p class="mb-1">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
-                Paciente: <strong>{{ paciente.nombre }}</strong><br>
-                Unidad: <strong>{{ paciente.unidad.nombre }}</strong>
     <div class="card shadow-lg p-4 w-100" style="max-width: 1100px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
-
-    <div class="card shadow-lg p-4 w-100"
-        style="max-width: 1100px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
 
         <div class="mb-4 text-center">
             <i class="bi bi-calendar-heart" style="font-size: 2.5rem; color: #0d6efd;"></i>
@@ -43,7 +32,6 @@
                             <th>Motivo</th>
                             <th>Estado</th>
                             <th>Acciones</th>
-                            <th style="min-width: 260px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,59 +48,10 @@
                                 <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
 
                                 <span class="badge 
-
-        <div class="table-responsive rounded-4 overflow-hidden">
-            <table class="table table-hover align-middle mb-0"
-                style="background: rgba(255,255,255,0.92); border-radius: 16px;">
-                <thead style="background: linear-gradient(90deg, #0d6efd 60%, #90e0ef 100%); color: #fff;">
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Médico</th>
-                        <th>Especialidad</th>
-                        <th>Unidad</th>
-                        <th>Motivo</th>
-                        <th>Estado</th>
-                        <th style="min-width: 260px;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cita in citas %}
-                    <tr style="transition: background 0.2s;" onmouseover="this.style.background='#e7f1ff'"
-                        onmouseout="this.style.background=''">
-                        <td>{{ cita.fecha }}</td>
-                        <td>{{ cita.hora }}</td>
-                        <td>{{ cita.medico.nombre }}</td>
-                        <td>{{ cita.medico.especialidad }}</td>
-                        <td>{{ cita.unidad.nombre }}</td>
-                        <td>{{ cita.motivo }}</td>
-                        <td>
-                            <span class="badge 
-
                                     {% if cita.estado == 'pendiente' or cita.estado == 'P' %}bg-warning text-dark
                                     {% elif cita.estado == 'realizada' or cita.estado == 'C' %}bg-success
                                     {% elif cita.estado == 'A' %}bg-danger
                                     {% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
-
-                                    {{ cita.get_estado_display }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{% url 'detalle_cita_paciente' cita.id %}" class="btn btn-sm btn-outline-primary mb-1 rounded-pill px-3 {% if not cita.consulta %}disabled{% endif %}">Ver Consulta</a>
-                                <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger mb-1 rounded-pill px-3">Cancelar</a>
-                                <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-info mb-1 rounded-pill px-3 text-white">Reprogramar</a>
-
-                                <div class="d-flex flex-nowrap gap-2">
-                                    <a href="{% url 'detalle_cita_paciente' cita.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-2 {% if not cita.consulta %}disabled{% endif %}">Ver Consulta</a>
-                                    <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-2">Cancelar</a>
-                                    <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-info rounded-pill px-2 text-white">Reprogramar</a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
 
                                 {{ cita.get_estado_display }}
                             </span>
