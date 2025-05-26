@@ -2,6 +2,10 @@
 {% block content %}
 <div class="container mt-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
 
+
+    <div class="card shadow-lg p-4 w-100" style="max-width: 1100px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+
+
     <div class="card shadow-lg p-4 w-100" style="max-width: 1000px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
         <div class="mb-4 text-center">
             <i class="bi bi-calendar-heart" style="font-size: 2.5rem; color: #0d6efd;"></i>
@@ -14,6 +18,7 @@
 
     <div class="card shadow-lg p-4 w-100"
         style="max-width: 1100px; background: rgba(255,255,255,0.18); border-radius: 22px; backdrop-filter: blur(8px); border: 1.5px solid #e0e0e0;">
+
 
         <div class="mb-4 text-center">
             <i class="bi bi-calendar-heart" style="font-size: 2.5rem; color: #0d6efd;"></i>
@@ -43,6 +48,8 @@
                             <th>Motivo</th>
                             <th>Estado</th>
                             <th>Acciones</th>
+
+
                             <th style="min-width: 260px;">Acciones</th>
                         </tr>
                     </thead>
@@ -60,6 +67,8 @@
                                 <span class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
 
                                 <span class="badge 
+
+
 
         <div class="table-responsive rounded-4 overflow-hidden">
             <table class="table table-hover align-middle mb-0"
@@ -89,10 +98,13 @@
                         <td>
                             <span class="badge 
 
+
                                     {% if cita.estado == 'pendiente' or cita.estado == 'P' %}bg-warning text-dark
                                     {% elif cita.estado == 'realizada' or cita.estado == 'C' %}bg-success
                                     {% elif cita.estado == 'A' %}bg-danger
                                     {% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+
+
 
                                     {{ cita.get_estado_display }}
                                 </span>
@@ -113,6 +125,7 @@
                     </tbody>
                 </table>
             </div>
+
 
                                 {{ cita.get_estado_display }}
                             </span>
