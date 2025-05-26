@@ -19,8 +19,15 @@ class Unidad(models.Model):
     
     
 class Medico(models.Model):
+    ESPECIALIDAD_CHOICES = [
+        ('Fractura', 'Fractura'),
+        ('General', 'General'),
+        ('Internista', 'Internista'),
+        ('Dermatólogo', 'Dermatólogo'),
+        ('Pediatría', 'Pediatría'),
+    ]
     nombre = models.CharField(max_length=100)
-    especialidad = models.CharField(max_length=100)
+    especialidad = models.CharField(max_length=100, choices=ESPECIALIDAD_CHOICES)
     jornada = models.CharField(max_length=50, choices=[('M', 'Matinal'), ('V', 'Vespertina')])
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=100)
@@ -44,10 +51,14 @@ class Medico(models.Model):
     
 
 class Paciente(models.Model):
+    tipo_afiliacion_choices = [
+        ('contributivo', 'Contributivo'),
+        ('subsidiado', 'Subsidiado'),
+    ]
     identificacion = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=100)
     edad = models.IntegerField()
-    tipo_afiliacion = models.CharField(max_length=50)
+    tipo_afiliacion = models.CharField(max_length=50, choices=tipo_afiliacion_choices)
     fecha_ingreso = models.DateField(auto_now_add=True)
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=100)

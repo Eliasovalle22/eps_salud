@@ -1,121 +1,126 @@
-body {
-  background: linear-gradient(135deg, #90E0EF 0%, #03045E 100%);
+/* Estilos para centrar y mejorar el login */
+.login-container {
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.login-card,
+
+.login-card {
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid #e0e0e0;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-card h2 {
+  color: #0d6efd;
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.login-card .form-label {
+  color: #0d6efd;
+  font-weight: 500;
+}
+
+.login-card .form-control {
+  border-radius: 50px;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1.5px solid #90e0ef;
+  background: rgba(255,255,255,0.7);
+  transition: border 0.3s;
+}
+
+.login-card .form-control:focus {
+  border: 1.5px solid #0d6efd;
+  background: rgba(144,224,239,0.15);
+}
+
+.login-card .btn-primary {
+  border-radius: 50px;
+  padding: 10px 0;
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(90deg, #0d6efd 60%, #90e0ef 100%);
+  border: none;
+  transition: background 0.3s;
+}
+
+.login-card .btn-primary:hover {
+  background: linear-gradient(90deg, #90e0ef 0%, #0d6efd 100%);
+  color: #fff;
+}
+
+.login-card .text-muted {
+  text-align: center;
+  margin-top: 16px;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
 .registro-card {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-input, select, textarea,
-input[type="text"], input[type="password"], input[type="email"] {
-  border-radius: 50px !important;
-  padding: 10px !important;
-  margin-bottom: 10px !important;
-  box-shadow: none !important;
-  outline: none !important;
-  transition: background 0.3s, border 0.3s !important;
-}
-input:focus, select:focus, textarea:focus,
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
-  background: rgba(30, 110, 221, 0.25) !important;
-  border: 1.5px solid #0d6efd !important;
-  color: #000000 !important;
-  color: #fff !important;
-
-}
-label {
-  color: #e0e0e0;
-}
-.btn-outline-secondary,
-.btn-outline-secondary:visited {
-  color: #fff !important;
-  border-color: #fff !important;
-}
-.btn-outline-secondary:hover {
-  background: #fff;
-  color: #0d6efd !important;
-  border-color: #fff !important;
-}
-.text-center {
-
-  display: flex;
-  display: flex;
-
-  flex-direction: column; 
-  gap: 20px; 
-}
-.mb-3 {
-  overflow: hidden;
-}
-.form-label {
-  font-weight:bold;
+  border: 1.5px solid #e0e0e0;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 100%;
 }
 
-#id_nombre {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   width: 350px; 
-}
-#id_especialidad {
-  display: flex;
-   justify-content: space-between;
-   align-items: center;
-   width: 350px;
-}
-#id_jornada {
-  display: flex;
-   justify-content: space-between;
-   align-items: center;
-   width: 350px;
-}
-#id_username {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 350px;
-}
-#id_unidad {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 350px;
-}
-#id_identificacion {
-   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 350px;
-}
-#id_edad{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 350px;
-}
-#id_tipo_afiliacion {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 350px;
+.registro-card h2 {
+  color: #0d6efd;
+  font-weight: bold;
+  margin-bottom: 18px;
+  text-align: center;
 }
 
-.badge {
-   border: 1px solid #000;
-   padding: -5px;
-   margin: -20px;
-   
+.registro-card .form-label {
+  color: #0d6efd;
+  font-weight: 500;
 }
-#id_nombre,
-#id_especialidad,
-#id_jornada,
-#id_username,
-#id_unidad {
 
+.registro-card .form-control {
+  border-radius: 50px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1.5px solid #90e0ef;
+  background: rgba(255,255,255,0.7);
+  transition: border 0.3s;
+}
+
+.registro-card .form-control:focus {
+  border: 1.5px solid #0d6efd;
+  background: rgba(144,224,239,0.15);
+}
+
+.registro-card .btn-primary,
+.registro-card .btn-outline-secondary {
+  border-radius: 50px;
+  padding: 10px 0;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.registro-card .btn-primary {
+  background: linear-gradient(90deg, #0d6efd 60%, #90e0ef 100%);
+  border: none;
+  transition: background 0.3s;
+}
+
+.registro-card .btn-primary:hover {
+  background: linear-gradient(90deg, #90e0ef 0%, #0d6efd 100%);
+  color: #fff;
 }
 

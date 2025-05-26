@@ -3,8 +3,9 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Medico, Paciente, Cita
 from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm, CitaForm, ConsultaForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from datetime import date
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -191,8 +192,10 @@ def citas_paciente(request):
 
     paciente_id = request.session.get('user_id')
     paciente = Paciente.objects.get(id=paciente_id)
-    citas = Cita.objects.filter(
-        paciente__id=paciente_id).order_by('-fecha', '-hora')
+    citas_list = Cita.objects.filter(paciente=paciente).order_by('-fecha', '-hora')
+    paginator = Paginator(citas_list, 5) 
+    page_number = request.GET.get('page')
+    citas = paginator.get_page(page_number)
 
     return render(request, 'core/citas_paciente.html', {
         'citas': citas,
@@ -207,9 +210,11 @@ def citas_medico(request):
 
     medico_id = request.session.get('user_id')
     medico = Medico.objects.get(id=medico_id)
-    citas = Cita.objects.filter(
-        medico__id=medico_id
-    ).order_by('-fecha', 'hora')
+    hoy = date.today()
+    citas_list = Cita.objects.filter(medico=medico, fecha=hoy).order_by('hora')
+    paginator = Paginator(citas_list, 5)  
+    page_number = request.GET.get('page')
+    citas = paginator.get_page(page_number)
 
     return render(request, 'core/citas_medico.html', {
         'citas': citas,
@@ -283,3 +288,12 @@ def reprogramar_cita(request, cita_id):
     else:
         form = CitaForm(instance=cita)
     return render(request, 'core/reprogramar_cita.html', {'form': form, 'cita': cita})
+
+
+def medicos_por_especialidad(request):
+    especialidad = request.GET.get('especialidad')
+    medicos = []
+    if especialidad:
+        medicos_qs = Medico.objects.filter(especialidad=especialidad)
+        medicos = [{'id': m.id, 'nombre': m.nombre} for m in medicos_qs]
+    return JsonResponse({'medicos': medicos})

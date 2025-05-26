@@ -18,4 +18,5 @@ urlpatterns = [
     path('medico/cita/eliminar/<int:cita_id>/',views.eliminar_cita, name='eliminar_cita'),
     path('paciente/cita/cancelar/<int:cita_id>/',views.cancelar_cita, name='cancelar_cita'),
     path('paciente/cita/reprogramar/<int:cita_id>/',views.reprogramar_cita, name='reprogramar_cita'),
+    path('ajax/medicos_por_especialidad/',views.medicos_por_especialidad, name='medicos_por_especialidad'),
 ]
