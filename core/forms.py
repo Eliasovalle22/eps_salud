@@ -14,13 +14,14 @@ class MedicoRegistroForm(forms.ModelForm):
 
     class Meta:
         model = Medico
-        fields = ['nombre', 'especialidad', 'jornada','username', 'password', 'unidad']
+        fields = ['nombre', 'direccion', 'telefono', 'especialidad', 'jornada','username', 'password']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'especialidad': forms.Select(attrs={'class': 'form-select'}),
             'jornada': forms.Select(attrs={'class': 'form-select'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'unidad': forms.Select(attrs={'class': 'form-select'}),
         }
 
 
@@ -30,14 +31,16 @@ class PacienteRegistroForm(forms.ModelForm):
 
     class Meta:
         model = Paciente
-        fields = ['identificacion', 'nombre', 'edad','tipo_afiliacion', 'username', 'password', 'unidad']
+        fields = ['identificacion', 'nombre', 'apellido', 'direccion', 'edad','tipo_afiliacion', 'username', 'password', 'especialidad']
         widgets = {
             'identificacion': forms.TextInput(attrs={'class': 'form-control'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
             'edad': forms.NumberInput(attrs={'class': 'form-control'}),
             'tipo_afiliacion': forms.Select(attrs={'class': 'form-select'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'unidad': forms.Select(attrs={'class': 'form-select'}),
+            'especialidad': forms.Select(attrs={'class': 'form-select'}),
         }
 
 

@@ -10,7 +10,7 @@
         <p><strong>Motivo:</strong> {{ cita.motivo }}</p>
         <p><strong>Estado:</strong>
             <span
-                class="badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
+                class="rounded-pill bg-success px-3 py-2 fs-6 shadow-sm badge {% if cita.estado == 'pendiente' %}bg-warning text-dark{% elif cita.estado == 'realizada' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2 fs-6">
                 {{ cita.get_estado_display }}
             </span>
         </p>

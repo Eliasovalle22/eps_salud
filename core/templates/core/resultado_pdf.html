@@ -13,8 +13,9 @@
 </head>
 <body>
     <h2>Resultado de Consulta</h2>
-    <p><strong>Paciente:</strong> {{ cita.paciente.nombre }}</p>
+    <p><strong>Paciente:</strong> {{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</p>
     <p><strong>Médico:</strong> {{ cita.medico.nombre }}</p>
+    <p><strong>Especialidad:</strong> {{ cita.medico.get_especialidad_display }}</p>
     <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
     <p><strong>Hora:</strong> {{ cita.hora }}</p>
     <p><strong>Motivo:</strong> {{ cita.motivo }}</p>

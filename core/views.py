@@ -31,7 +31,7 @@ def login_view(request):
                 request.session['user_type'] = 'paciente'
                 return redirect('citas_paciente')
 
-            messages.error(request, 'Credenciales incorrectas')
+            messages.error(request, 'Usuario o contraseña incorrectos')
 
     else:
         form = LoginForm()
@@ -73,36 +73,6 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-# -------------------VISTA MEDICO HOME-------------------------
-
-
-# def citas_medico(request):
-#     if request.session.get('user_type') != 'medico':
-#         return redirect('login')
-
-#     medico_id = request.session.get('user_id')
-#     medico = Medico.objects.get(id=medico_id)
-#     citas = Cita.objects.filter(
-#         medico__id=medico_id
-#     ).order_by('-fecha', 'hora')
-
-#     return render(request, 'core/citas_medico.html', {
-#         'citas': citas,
-#         'medico': medico,
-#     })
-
-
-# -------------------VISTA PACIENTE HOME-------------------------
-# def citas_paciente(request):
-#     if request.session.get('user_type') != 'paciente':
-#         return redirect('login')
-
-#     paciente_id = request.session.get('user_id')
-#     paciente = Paciente.objects.get(id=paciente_id)
-#     citas = Cita.objects.filter(paciente=paciente)
-
-#     return render(request, 'core/citas_paciente.html', {'citas': citas})
-
 
 # -------------------VISTA AGENDAR CITA-------------------------
 def agendar_cita(request):
@@ -127,7 +97,7 @@ def agendar_cita(request):
                     request, 'El médico ya tiene 10 citas para ese día.')
             else:
                 cita.paciente = paciente
-                cita.unidad = medico.unidad
+                cita.especialidad = medico.especialidad
                 cita.estado = 'P'
                 cita.save()
                 messages.success(request, 'Cita agendada correctamente.')
@@ -179,7 +149,7 @@ def ver_consulta(request, cita_id):
                 cita.estado = 'C'  # Cambia el estado a Confirmada al crear consulta
                 cita.save()
                 messages.success(request, 'Consulta registrada correctamente.')
-                return redirect('ver_consulta', cita_id=cita.id)
+                return redirect('citas_medico')
         else:
             form = ConsultaForm()
         return render(request, 'core/crear_consulta.html', {'cita': cita, 'form': form})
@@ -218,15 +188,28 @@ def citas_medico(request):
 
     medico_id = request.session.get('user_id')
     medico = Medico.objects.get(id=medico_id)
-    hoy = date.today()
-    citas_list = Cita.objects.filter(medico=medico, fecha=hoy).order_by('hora')
-    paginator = Paginator(citas_list, 5)  
+
+    # Filtro por fecha
+    fecha = request.GET.get('fecha')
+    if fecha:
+        citas_list = Cita.objects.filter(
+            medico=medico, fecha=fecha).order_by('hora')
+    else:
+        from datetime import date
+        hoy = date.today()
+        citas_list = Cita.objects.filter(
+            medico=medico, fecha=hoy).order_by('hora')
+
+    paginator = Paginator(citas_list, 5)
     page_number = request.GET.get('page')
     citas = paginator.get_page(page_number)
 
+    # Pasa la fecha seleccionada y el día de hoy al template
     return render(request, 'core/citas_medico.html', {
         'citas': citas,
         'medico': medico,
+        'fecha_seleccionada': fecha,
+        'hoy': fecha if fecha else hoy,
     })
 
 

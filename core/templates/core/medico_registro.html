@@ -17,6 +17,20 @@
         {% endif %}
       </div>
       <div class="mb-3">
+        <label for="{{ form.direccion.id_for_label }}" class="form-label">Dirección</label>
+        {{ form.direccion }}
+        {% if form.direccion.errors %}
+        <div class="text-danger small">{{ form.direccion.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="mb-3">
+        <label for="{{ form.telefono.id_for_label }}" class="form-label">Teléfono</label>
+        {{ form.telefono }}
+        {% if form.telefono.errors %}
+        <div class="text-danger small">{{ form.telefono.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="mb-3">
         <label for="{{ form.especialidad.id_for_label }}" class="form-label">Especialidad</label>
         {{ form.especialidad }}
         {% if form.especialidad.errors %}
@@ -44,15 +58,8 @@
         <div class="text-danger small">{{ form.password.errors }}</div>
         {% endif %}
       </div>
-      <div class="mb-3">
-        <label for="{{ form.unidad.id_for_label }}" class="form-label">Unidad</label>
-        {{ form.unidad }}
-        {% if form.unidad.errors %}
-        <div class="text-danger small">{{ form.unidad.errors }}</div>
-        {% endif %}
-      </div>
       <button class="btn btn-primary mt-2" type="submit">Registrarse</button>
-      <a href="{% url 'login' %}" class="btn btn-outline-secondary mt-2">Volver al Login</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary mt-2">Volver</a>
     </form>
   </div>
 </div>

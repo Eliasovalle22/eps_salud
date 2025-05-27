@@ -7,16 +7,22 @@
         <div class="mb-4 text-center">
             <i class="bi bi-calendar2-heart" style="font-size: 3rem; color: #0d6efd;"></i>
             <h2 class="mt-2 mb-0 fw-bold" style="color: #0d6efd;">
-                Citas para hoy
-                {% if hoy %}
-                    <span class="fs-5 text-dark">({{ hoy }})</span>
-                {% endif %}
+                Citas para {{ hoy }}
             </h2>
             <small class="text-dark" style="font-size: 1.35rem;">
-                Médico: <strong style="font-size: 1.45rem;">{{ medico.nombre }}</strong> <br>
-                Unidad: <strong style="font-size: 1.45rem;">{{ medico.unidad.nombre }}</strong>
+            Médico: <strong style="font-size: 1.45rem;">{{ medico.nombre }}</strong> <br>
+            Especialidad: <strong style="font-size: 1.45rem;">{{ medico.especialidad }}</strong>
             </small>
         </div>
+        <!-- Formulario de filtro por fecha -->
+        <form method="get" class="row g-2 mb-3 justify-content-left">
+            <div class="col-auto">
+            <input type="date" name="fecha" class="form-control" value="{{ fecha_seleccionada|default:hoy }}">
+            </div>
+            <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary rounded-pill">Filtrar por fecha</button>
+            </div>
+        </form>
         {% if citas %}
         <div class="table-responsive rounded-4 overflow-hidden">
             <table class="table table-hover align-middle mb-0" style="background: rgba(255,255,255,0.85); border-radius: 16px;">

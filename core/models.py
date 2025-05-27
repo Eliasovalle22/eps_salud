@@ -27,11 +27,12 @@ class Medico(models.Model):
         ('Pediatría', 'Pediatría'),
     ]
     nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=15)
     especialidad = models.CharField(max_length=100, choices=ESPECIALIDAD_CHOICES)
     jornada = models.CharField(max_length=50, choices=[('M', 'Matinal'), ('V', 'Vespertina')])
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=100)
-    unidad = models.OneToOneField(Unidad, on_delete=models.SET_NULL, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     
@@ -57,12 +58,26 @@ class Paciente(models.Model):
     ]
     identificacion = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
     edad = models.IntegerField()
     tipo_afiliacion = models.CharField(max_length=50, choices=tipo_afiliacion_choices)
     fecha_ingreso = models.DateField(auto_now_add=True)
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=100)
-    unidad = models.ForeignKey(Unidad, on_delete=models.SET_NULL, null=True)
+    especialidad = models.CharField(
+        max_length=100,
+        choices=Medico.ESPECIALIDAD_CHOICES,
+        null=True,
+        blank=True
+    )
+    medico_asociado = models.ForeignKey(
+        Medico,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='pacientes'
+    )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     

@@ -14,9 +14,9 @@
             <div class="mb-3">
                 <label for="estado" class="form-label"><strong>Estado de la cita:</strong></label>
                 <select name="estado" id="estado" class="form-select">
-                    <option value="P" {% if cita.estado=="P" %}selected{% endif %}>Pendiente</option>
-                    <option value="C" {% if cita.estado=="C" %}selected{% endif %}>Confirmada</option>
-                    <option value="A" {% if cita.estado=="A" %}selected{% endif %}>Anulada</option>
+                    <option value="P" {% if cita.estado == "P" %}selected{% endif %}>Pendiente</option>
+                    <option value="C" {% if cita.estado == "C" %}selected{% endif %}>Confirmada</option>
+                    <option value="A" {% if cita.estado == "A" %}selected{% endif %}>Anulada</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary w-100 mb-2">Actualizar Estado</button>

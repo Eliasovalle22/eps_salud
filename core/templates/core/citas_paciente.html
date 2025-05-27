@@ -9,8 +9,8 @@
             <small class="text-light" style="font-size: 1.35rem;">
                 <p class="mb-1 text-dark">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
                 <span class="text-dark" style="font-size: 1.45rem;">
-                    Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }}</strong><br>
-                    Unidad: <strong style="font-size: 1.65rem;">{{ paciente.unidad.nombre }}</strong>
+                    Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }} {{ paciente.apellido }}</strong><br>
+                    Especialidad: <strong style="font-size: 1.65rem;">{{ paciente.get_especialidad_display }}</strong>
                 </span>
             </small>
         </div>
@@ -35,7 +35,6 @@
                         <th>Hora</th>
                         <th>Médico</th>
                         <th>Especialidad</th>
-                        <th>Unidad</th>
                         <th>Motivo</th>
                         <th>Estado</th>
                         <th style="min-width: 260px;">Acciones</th>
@@ -48,7 +47,6 @@
                         <td>{{ cita.hora }}</td>
                         <td>{{ cita.medico.nombre }}</td>
                         <td>{{ cita.medico.get_especialidad_display }}</td>
-                        <td>{{ cita.unidad.nombre }}</td>
                         <td>{{ cita.motivo }}</td>
                         <td>
                             {% if cita.estado == 'pendiente' or cita.estado == 'P' %}
