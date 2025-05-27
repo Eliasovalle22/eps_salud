@@ -31,6 +31,7 @@
 
 # Vista Medico
 
-    ![image](https://github.com/user-attachments/assets/8682fe0b-2e25-40d8-a218-ebaa370a17f2)
+![image](https://github.com/user-attachments/assets/25b08c49-f621-4a63-9045-d5b0afc1af84)
+
 
 # Vista Paciente
