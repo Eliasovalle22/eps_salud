@@ -35,3 +35,6 @@
 
 
 # Vista Paciente
+
+![image](https://github.com/user-attachments/assets/d09ab135-97dc-4ea7-ad99-c8f959e0aa2b)
+
