@@ -31,6 +31,14 @@
 
 ![image](https://github.com/user-attachments/assets/be0272bf-befe-4c30-8587-768691806b60)
 
+# Formulario de registro Paciente
+
+![image](https://github.com/user-attachments/assets/2aad0ca8-490d-48a1-a8e7-1b81e534aa5e)
+
+
+# Formulario de registro Medico
+
+![image](https://github.com/user-attachments/assets/1b965482-7058-4c0f-a2a7-5aade62410ed)
 
 # Vista Medico
 
