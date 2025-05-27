@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de Consulta</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 13px; }
+        h2 { color: #0d6efd; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #bbb; padding: 6px 8px; text-align: left; }
+        th { background: #eef3f7; }
+    </style>
+</head>
+<body>
+    <h2>Resultado de Consulta</h2>
+    <p><strong>Paciente:</strong> {{ cita.paciente.nombre }}</p>
+    <p><strong>Médico:</strong> {{ cita.medico.nombre }}</p>
+    <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+    <p><strong>Hora:</strong> {{ cita.hora }}</p>
+    <p><strong>Motivo:</strong> {{ cita.motivo }}</p>
+    <hr>
+    <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
+    <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
+    <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
+</body>
+</html>

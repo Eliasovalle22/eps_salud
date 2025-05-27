@@ -19,6 +19,9 @@
         <p><strong>Síntoma:</strong> {{ consulta.sintoma }}</p>
         <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
         <p><strong>Fecha de atención:</strong> {{ consulta.fecha_atencion }}</p>
+        <a href="{% url 'descargar_resultado_pdf' cita.id %}" class="btn btn-outline-primary w-100 mt-3">
+            <i class="bi bi-file-earmark-pdf"></i> Descargar Resultado PDF
+        </a>
         {% else %}
         <div class="alert alert-warning text-center">Aún no hay consulta registrada para esta cita.</div>
         {% endif %}

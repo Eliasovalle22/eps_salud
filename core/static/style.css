@@ -1,3 +1,8 @@
+body {
+  background: #eaf6fb;
+}
+
+
 /* Estilos para centrar y mejorar el login */
 .login-container {
   min-height: 100vh;
@@ -122,5 +127,15 @@
 .registro-card .btn-primary:hover {
   background: linear-gradient(90deg, #90e0ef 0%, #0d6efd 100%);
   color: #fff;
+}
+
+.table {
+  background-color: #f4f8fb;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  background-color: #f4f8fb;
 }
 

@@ -6,7 +6,8 @@ from .forms import LoginForm, MedicoRegistroForm, PacienteRegistroForm, CitaForm
 from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.core.paginator import Paginator
-
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 # Create your views here.
 
 #-------------------VISTA LOGIN-------------------------
@@ -192,8 +193,15 @@ def citas_paciente(request):
 
     paciente_id = request.session.get('user_id')
     paciente = Paciente.objects.get(id=paciente_id)
-    citas_list = Cita.objects.filter(paciente=paciente).order_by('-fecha', '-hora')
-    paginator = Paginator(citas_list, 5) 
+    citas_list = Cita.objects.filter(
+        paciente=paciente).order_by('-fecha', '-hora')
+
+    # Filtro por fecha
+    fecha = request.GET.get('fecha')
+    if fecha:
+        citas_list = citas_list.filter(fecha=fecha)
+
+    paginator = Paginator(citas_list, 5)
     page_number = request.GET.get('page')
     citas = paginator.get_page(page_number)
 
@@ -297,3 +305,24 @@ def medicos_por_especialidad(request):
         medicos_qs = Medico.objects.filter(especialidad=especialidad)
         medicos = [{'id': m.id, 'nombre': m.nombre} for m in medicos_qs]
     return JsonResponse({'medicos': medicos})
+
+
+def descargar_resultado_pdf(request, cita_id):
+    if request.session.get('user_type') != 'paciente':
+        return redirect('login')
+    cita = get_object_or_404(
+        Cita, id=cita_id, paciente_id=request.session.get('user_id'))
+    consulta = getattr(cita, 'consulta', None)
+    if not consulta:
+        return HttpResponse('No hay resultado para esta cita.', status=404)
+
+    template_path = 'core/resultado_pdf.html'
+    context = {'cita': cita, 'consulta': consulta}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="resultado_cita_{cita.id}.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Error al generar PDF', status=500)
+    return response

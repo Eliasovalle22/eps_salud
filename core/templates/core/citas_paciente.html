@@ -17,6 +17,15 @@
         <div class="text-end mb-3">
             <a href="{% url 'agendar_cita' %}" class="btn btn-success rounded-pill px-4">Agendar Nueva Cita</a>
         </div>
+        <!-- Formulario de filtro por fecha -->
+        <form method="get" class="row g-2 mb-3">
+            <div class="col-auto">
+                <input type="date" name="fecha" class="form-control" value="{{ request.GET.fecha }}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">Filtrar por fecha</button>
+            </div>
+        </form>
         {% if citas %}
         <div class="table-responsive rounded-4 overflow-hidden">
             <table class="table table-hover align-middle mb-0" style="background: rgba(255,255,255,0.92); border-radius: 16px;">
@@ -74,7 +83,7 @@
                 <ul class="pagination justify-content-center">
                     {% if citas.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ citas.previous_page_number }}">&laquo;</a>
+                            <a class="page-link" href="?page={{ citas.previous_page_number }}{% if request.GET.fecha %}&fecha={{ request.GET.fecha }}{% endif %}">&laquo;</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
@@ -83,12 +92,12 @@
                         {% if citas.number == num %}
                             <li class="page-item active"><span class="page-link">{{ num }}</span></li>
                         {% elif num > citas.number|add:'-3' and num < citas.number|add:'3' %}
-                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.fecha %}&fecha={{ request.GET.fecha }}{% endif %}">{{ num }}</a></li>
                         {% endif %}
                     {% endfor %}
                     {% if citas.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ citas.next_page_number }}">&raquo;</a>
+                            <a class="page-link" href="?page={{ citas.next_page_number }}{% if request.GET.fecha %}&fecha={{ request.GET.fecha }}{% endif %}">&raquo;</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
