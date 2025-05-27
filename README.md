@@ -27,3 +27,10 @@
 5. Ejecución local
     python manage.py runserver 0.0.0.0:8000
    
+# Vista Login
+
+# Vista Medico
+
+    ![image](https://github.com/user-attachments/assets/8682fe0b-2e25-40d8-a218-ebaa370a17f2)
+
+# Vista Paciente
