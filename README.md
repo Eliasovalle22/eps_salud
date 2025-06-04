@@ -49,3 +49,9 @@
 
 ![image](https://github.com/user-attachments/assets/d09ab135-97dc-4ea7-ad99-c8f959e0aa2b)
 
+
+# Resultado PDF
+
+![image](https://github.com/user-attachments/assets/615be871-1793-4748-9913-0e44d4c88489)
+
+
