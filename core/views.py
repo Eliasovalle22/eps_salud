@@ -266,19 +266,19 @@ def cancelar_cita(request, cita_id):
 
 #--------------------REPROGRAMAR CITA-------------------------
 def reprogramar_cita(request, cita_id):
-    if request.session.get('user_type') != 'paciente':
-        return redirect('login')
-    cita = get_object_or_404(
-        Cita, id=cita_id, paciente_id=request.session.get('user_id'), estado='P')
+    cita = get_object_or_404(Cita, id=cita_id)
     if request.method == 'POST':
         form = CitaForm(request.POST, instance=cita)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Cita reprogramada correctamente.')
+            cita = form.save(commit=False)
+            # Si la cita estaba cancelada, cámbiala a pendiente
+            if cita.estado == 'A':
+                cita.estado = 'P'
+            cita.save()
             return redirect('citas_paciente')
     else:
         form = CitaForm(instance=cita)
-    return render(request, 'core/reprogramar_cita.html', {'form': form, 'cita': cita})
+    return render(request, 'core/reprogramar_cita.html', {'form': form})
 
 
 def medicos_por_especialidad(request):

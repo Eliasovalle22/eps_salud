@@ -39,7 +39,7 @@
                     {% for cita in citas %}
                     <tr>
                         <td class="fw-semibold">{{ cita.hora }}</td>
-                        <td>{{ cita.paciente.nombre }}</td>
+                        <td>{{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</td>
                         <td>{{ cita.motivo }}</td>
                         <td>
                             {% if cita.estado == 'pendiente' or cita.estado == 'P' %}

@@ -10,7 +10,7 @@
                 <p class="mb-1 text-dark">Recuerda que puedes cancelar o reprogramar tus citas desde aquí.</p>
                 <span class="text-dark" style="font-size: 1.45rem;">
                     Paciente: <strong style="font-size: 1.65rem;">{{ paciente.nombre }} {{ paciente.apellido }}</strong><br>
-                    Especialidad: <strong style="font-size: 1.65rem;">{{ paciente.get_especialidad_display }}</strong>
+                    {% comment %} Especialidad: <strong style="font-size: 1.65rem;">{{ paciente.get_especialidad_display }}</strong> {% endcomment %}
                 </span>
             </small>
         </div>
@@ -52,9 +52,9 @@
                             {% if cita.estado == 'pendiente' or cita.estado == 'P' %}
                                 <span class="badge rounded-pill bg-warning text-dark px-3 py-2 fs-6 shadow-sm"><i class="bi bi-hourglass-split"></i> Pendiente</span>
                             {% elif cita.estado == 'realizada' or cita.estado == 'C' %}
-                                <span class="badge rounded-pill bg-success px-3 py-2 fs-6 shadow-sm"><i class="bi bi-check-circle"></i> Realizada</span>
+                                <span class="badge rounded-pill bg-success px-3 py-2 fs-6 shadow-sm"><i class="bi bi-check-circle"></i> Confirmada</span>
                             {% elif cita.estado == 'A' %}
-                                <span class="badge rounded-pill bg-danger px-3 py-2 fs-6 shadow-sm"><i class="bi bi-x-circle"></i> Cancelada</span>
+                                <span class="badge rounded-pill bg-danger px-3 py-2 fs-6 shadow-sm"><i class="bi bi-x-circle"></i> Anulada</span>
                             {% else %}
                                 <span class="badge rounded-pill bg-secondary px-3 py-2 fs-6 shadow-sm">Desconocido</span>
                             {% endif %}
@@ -64,12 +64,14 @@
                                 <a href="{% url 'detalle_cita_paciente' cita.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3 d-flex align-items-center {% if not cita.consulta %}disabled{% endif %}">
                                     <i class="bi bi-eye"></i> <span class="ms-1">Ver</span>
                                 </a>
-                                <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 d-flex align-items-center">
-                                    <i class="bi bi-x-lg"></i> <span class="ms-1">Cancelar</span>
-                                </a>
-                                <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-info rounded-pill px-3 d-flex align-items-center text-white">
-                                    <i class="bi bi-arrow-repeat"></i> <span class="ms-1">Reprogramar</span>
-                                </a>
+                                {% if cita.estado != 'C' %}
+                                    <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 d-flex align-items-center">
+                                        <i class="bi bi-x-lg"></i> <span class="ms-1">Cancelar</span>
+                                    </a>
+                                    <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-info rounded-pill px-3 d-flex align-items-center text-white">
+                                        <i class="bi bi-arrow-repeat"></i> <span class="ms-1">Reprogramar</span>
+                                    </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

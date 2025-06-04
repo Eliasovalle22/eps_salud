@@ -23,4 +23,46 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const especialidadSelect = document.getElementById('id_especialidad');
+        const medicoSelect = document.getElementById('id_medico');
+
+        function limpiarMedicos() {
+            medicoSelect.innerHTML = '';
+            const option = document.createElement('option');
+            option.value = '';
+            option.text = 'Seleccione un médico';
+            medicoSelect.appendChild(option);
+        }
+
+        especialidadSelect.addEventListener('change', function() {
+            const especialidad = this.value;
+            limpiarMedicos();
+            if (especialidad) {
+                fetch(`/ajax/medicos_por_especialidad/?especialidad=${especialidad}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.medicos.length > 0) {
+                            data.medicos.forEach(function(medico) {
+                                const option = document.createElement('option');
+                                option.value = medico.id;
+                                option.text = medico.nombre;
+                                medicoSelect.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.text = 'No hay médicos disponibles';
+                            medicoSelect.appendChild(option);
+                        }
+                    });
+            }
+        });
+
+        if (especialidadSelect.value) {
+            especialidadSelect.dispatchEvent(new Event('change'));
+        }
+    });
+</script>
 {% endblock %}
